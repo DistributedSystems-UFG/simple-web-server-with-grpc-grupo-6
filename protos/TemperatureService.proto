@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.iotservice";
+option java_outer_classname = "IoTServiceProto";
+option objc_class_prefix = "TEMP";
+
+package temperature_service;
+
+service TemperatureService {
+  
+  // Registra uma temperatura
+  rpc RegisterTemp(TemperatureData) returns (StatusReply) {}
+
+  // Pega as temperaturas de uma data
+  rpc GetTempFromDate(Date) returns (TemperatureResponse) {}
+
+  // Pega as temperaturas de uma localizacao
+  rpc GetTempFromLocation(Location) returns (TemperatureResponse) {}
+  
+}
+
+message TemperatureData {
+  Date date = 1;
+  string location = 2;
+  string temperature = 3;
+}
+
+message Date {
+  uint32 day = 1;
+  uint32 month = 2;
+  uint32 year = 3;
+}
+
+message Location {
+  string location = 1;
+}
+
+message TemperatureResponse {
+  repeated TemperatureData temps = 1;
+}
+
+message StatusReply {
+  string status = 1;
+}
